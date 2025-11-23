@@ -59,7 +59,7 @@ Running the agent locally with mocked external dependencies:
 pytest tests/e2e/ -v
 
 # Start local development server
-docker-compose up --build
+docker compose up --build
 
 # Testing with sample data
 python -m spoon_agent.main --tokens BTC,ETH --mock-mode
@@ -84,7 +84,7 @@ export SPOON_OS_API_URL=https://api.manuspect.com
 export SPOON_TOOLKITS_URL=https://toolkits.manuspect.com
 
 # Run with production configuration
-docker-compose -f docker-compose.prod.yml up
+docker compose -f docker-compose.prod.yml up
 ```
 
 ## Architecture
@@ -120,7 +120,7 @@ pytest tests/e2e/
 
 ```bash
 # Start development environment
-docker-compose up -d
+docker compose up -d
 
 # Local agent run
 python -m spoon_agent.main
