@@ -1,11 +1,19 @@
 # Team Information
 
-## Project Lead
+## Team Members
 
 ### Evgene Kopylov
 - **Role**: Project Lead & Developer
 - **Telegram**: @EvgeneKopylov
 - **GitHub**: https://github.com/Evgene-Kopylov
+
+### Ilya Goldobin
+- **Role**: ML Engineer
+- **Telegram**: @bbliketerminal
+
+### Maxim Kardashin
+- **Role**: ML Engineer
+- **Telegram**: @hchgssarwyh
 
 ## Project Information
 

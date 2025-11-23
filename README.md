@@ -189,6 +189,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **Evgene Kopylov** - Project Lead
   - Telegram: @evgenekopylov
 
+- **Ilya Goldobin** - ML Engineer
+  - Telegram: @bbliketerminal
+
+- **Maxim Kardashin** - ML Engineer
+  - Telegram: @hchgssarwyh
+
 ## Project Links
 
 - **GitHub**: https://github.com/Evgene-Kopylov/spoon-agent
