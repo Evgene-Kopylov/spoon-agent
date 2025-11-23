@@ -1,46 +1,46 @@
-# Spoon Agent - Анализ криптовалютных торгов
+# Spoon Agent - Cryptocurrency Trading Analysis
 
-Автономный AI-агент для анализа криптовалютных торгов в экосистеме Spoon OS.
+Autonomous AI agent for cryptocurrency trading analysis in the Spoon OS ecosystem.
 
-## Обзор
+## Overview
 
-Spoon Agent - это модульная система анализа торгов, которая объединяет:
-- **Рыночные данные** из Binance API
-- **Анализ новостей** через Tavily search
-- **Технический анализ** с использованием AI моделей
-- **Инвестиционные рекомендации** на основе многофакторного анализа
+Spoon Agent is a modular trading analysis system that combines:
+- **Market data** from Binance API
+- **News analysis** via Tavily search
+- **Technical analysis** using AI models
+- **Investment recommendations** based on multi-factor analysis
 
-## Быстрый старт
+## Quick Start
 
-### Предварительные требования
+### Prerequisites
 - Python 3.12+
 - Docker & Docker Compose
-- API ключи для:
+- API keys for:
   - OpenAI
   - Tavily
-  - Binance (опционально)
+  - Binance (optional)
 
-### Установка
+### Installation
 
 ```bash
-# Клонировать репозиторий
-git clone https://github.com/manuspect/spoon-agent
+# Clone the repository
+git clone https://github.com/Evgene-Kopylov/spoon-agent
 cd spoon-agent
 
-# Установить зависимости
+# Install dependencies
 pip install -e .
 
-# Скопировать шаблон окружения
+# Copy environment template
 cp .env.example .env
-# Отредактировать .env с вашими API ключами
+# Edit .env with your API keys
 ```
 
-### Базовое использование
+### Basic Usage
 
 ```python
 from spoon_agent.main import run_analysis
 
-# Запустить анализ для конкретных токенов
+# Run analysis for specific tokens
 result = await run_analysis(
     tokens=["BTC", "ETH", "SOL"],
     analysis_type="comprehensive"
@@ -48,138 +48,148 @@ result = await run_analysis(
 print(result)
 ```
 
-## Сценарии использования
+## Use Cases
 
-### Сценарий 1: Изолированное тестирование (Open Source)
+### Scenario 1: Isolated Testing (Open Source)
 
-Запуск агента локально с моками внешних зависимостей:
+Running the agent locally with mocked external dependencies:
 
 ```bash
-# Запуск E2E тестов с моками API
+# Run E2E tests with API mocks
 pytest tests/e2e/ -v
 
-# Запуск локального сервера разработки
+# Start local development server
 docker-compose up --build
 
-# Тестирование с примерными данными
+# Testing with sample data
 python -m spoon_agent.main --tokens BTC,ETH --mock-mode
 ```
 
-**Примечание по E2E тестированию**: Полный E2E тест (`test_e2e_pipeline.py`) требует полной инфраструктуры Manuspect включая:
+**E2E Testing Note**: Full E2E test (`test_e2e_pipeline.py`) requires complete Manuspect infrastructure including:
 - NATS messaging system
-- Redis для управления состоянием
-- insight_worker сервис
-- Все сервисы из основного репозитория `manuspect-telegram`
+- Redis for state management
+- insight_worker service
+- All services from the main `manuspect-telegram` repository
 
-Для изолированного тестирования используйте моки E2E тестов в директории `tests/e2e/`.
+For isolated testing, use the E2E test mocks in the `tests/e2e/` directory.
 
-### Сценарий 2: Продакшен развертывание (Приватные модули)
+### Scenario 2: Production Deployment (Private Modules)
 
-Подключение к приватной инфраструктуре Manuspect:
+Connecting to private Manuspect infrastructure:
 
 ```bash
-# Установка продакшен окружения
+# Set up production environment
 export SPOON_AGENT_ENV=production
 export SPOON_OS_API_URL=https://api.manuspect.com
 export SPOON_TOOLKITS_URL=https://toolkits.manuspect.com
 
-# Запуск с продакшен конфигурацией
+# Run with production configuration
 docker-compose -f docker-compose.prod.yml up
 ```
 
-## Архитектура
+## Architecture
 
 ```
 spoon_agent/
-├── adapters/          # Интеграции с внешними API
-│   ├── binance.py     # Рыночные данные
-│   └── tavily.py      # Поиск новостей
+├── adapters/          # External API integrations
+│   ├── binance.py     # Market data
+│   └── tavily.py      # News search
 ├── graphs/            # LangGraph workflows
 │   ├── trading_analysis.py
-│   └── nodes/         # Отдельные узлы workflow
-├── prompts/           # Шаблоны AI промптов
-└── utils/             # Вспомогательные функции
+│   └── nodes/         # Individual workflow nodes
+├── prompts/           # AI prompt templates
+└── utils/             # Utility functions
 ```
 
-## Разработка
+## Development
 
-### Запуск тестов
+### Running Tests
 
 ```bash
-# Юнит тесты
+# Unit tests
 pytest tests/unit/
 
-# Интеграционные тесты
+# Integration tests
 pytest tests/integration/
 
-# E2E тесты с моками API
+# E2E tests with API mocks
 pytest tests/e2e/
 ```
 
-### Локальная разработка
+### Local Development
 
 ```bash
-# Запуск среды разработки
+# Start development environment
 docker-compose up -d
 
-# Локальный запуск агента
+# Local agent run
 python -m spoon_agent.main
 
-# Режим отладки с подробным логированием
+# Debug mode with detailed logging
 SPOON_AGENT_DEBUG=true python -m spoon_agent.main
 ```
 
-## Конфигурация
+## Configuration
 
-### Переменные окружения
+### Environment Variables
 
 ```bash
-# Обязательные
+# Required
 OPENAI_API_KEY=your_openai_key
 TAVILY_API_KEY=your_tavily_key
 
-# Опциональные
+# Optional
 BINANCE_API_KEY=your_binance_key
 BINANCE_SECRET_KEY=your_binance_secret
 SPOON_AGENT_DEBUG=false
 ```
 
-### Продакшен развертывание
+### Production Deployment
 
-Для продакшен развертывания с приватными модулями Manuspect:
+For production deployment with private Manuspect modules:
 
-1. Свяжитесь с командой Manuspect для получения доступа
-2. Используйте продакшен Docker Compose файл
-3. Настройте reverse proxy и SSL
-4. Настройте мониторинг и логирование
+1. Contact the Manuspect team for access
+2. Use the production Docker Compose file
+3. Set up reverse proxy and SSL
+4. Configure monitoring and logging
 
 ## API Reference
 
-### Основной эндпоинт анализа
+### Main Analysis Endpoint
 
 ```python
 await run_analysis(
-    tokens: List[str],           # Символы криптовалют
+    tokens: List[str],           # Cryptocurrency symbols
     analysis_type: str = "comprehensive",  # "quick" | "comprehensive"
-    timeframe: str = "1d",       # Временной интервал анализа
-    mock_mode: bool = False      # Использовать моки данных для тестирования
+    timeframe: str = "1d",       # Analysis timeframe
+    mock_mode: bool = False      # Use data mocks for testing
 ) -> AnalysisResult
 ```
 
-## Вклад в проект
+## Contributing
 
-1. Форкните репозиторий
-2. Создайте ветку фичи (`git checkout -b feature/amazing-feature`)
-3. Зафиксируйте изменения (`git commit -m 'Add amazing feature'`)
-4. Запушьте в ветку (`git push origin feature/amazing-feature`)
-5. Откройте Pull Request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## Лицензия
+## License
 
-Этот проект лицензирован под MIT License - смотрите файл LICENSE для деталей.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Поддержка
+## Support
 
-- **Проблемы Open Source**: GitHub Issues
-- **Приватная интеграция**: contact@manuspect.com
-- **Документация**: [docs.manuspect.com](https://docs.manuspect.com)
+- **Open Source Issues**: GitHub Issues
+- **Private Integration**: contact@manuspect.com
+- **Documentation**: [docs.manuspect.com](https://docs.manuspect.com)
+
+## Team
+
+- **Evgene Kopylov** - Project Lead
+  - Telegram: @evgenekopylov
+
+## Project Links
+
+- **GitHub**: https://github.com/Evgene-Kopylov/spoon-agent
+- **YouTube Demo**: Coming soon

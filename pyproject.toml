@@ -1,7 +1,12 @@
 [project]
 name = "spoon-agent"
 version = "0.1.0"
+description = "Autonomous AI agent for cryptocurrency trading analysis in the Spoon OS ecosystem"
 requires-python = ">=3.12"
+authors = [
+    {name = "Evgene Kopylov", email = "evgenekopylov@gmail.com"}
+]
+readme = "README.md"
 dependencies = [
     "spoon-toolkits>=0.2.2",
     "spoon-ai-sdk>=0.3.1",
