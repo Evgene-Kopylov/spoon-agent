@@ -95,7 +95,13 @@ async def prepare_token_list(
 
     # Extract token details for analysis
     token_details = {}
-    for token, data in token_data.items():
+    
+    # Limit to MAX_PARALLEL_TOKENS for testing
+    max_tokens = 2  # Reduced for testing
+    limited_tokens = selected_tokens[:max_tokens]
+    
+    for token in limited_tokens:
+        data = token_data[token]
         token_details[token] = {
             "symbol": data["symbol"],
             "price": data["lastPrice"],
@@ -105,12 +111,12 @@ async def prepare_token_list(
         }
 
     log = list(state.get("execution_log") or [])
-    log.append(f"Prepared {len(selected_tokens)} tokens for analysis")
+    log.append(f"Prepared {len(limited_tokens)} tokens for analysis (limited for testing)")
 
-    logger.info(f"Prepared tokens: {selected_tokens}")
+    logger.info(f"Prepared tokens: {limited_tokens} (limited for testing)")
 
     return {
-        "selected_tokens": selected_tokens,
+        "selected_tokens": limited_tokens,
         "token_details": token_details,
         "execution_log": log
     }

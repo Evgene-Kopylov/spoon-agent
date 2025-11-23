@@ -54,8 +54,52 @@ async def aggregate_results(
     allowed_tokens = list(valid_reports.keys())
     target_token = allowed_tokens[0] if allowed_tokens else None
 
+    # Extract only essential fields to reduce token usage
+    essential_reports = {}
+    for token, report in valid_reports.items():
+        # Handle technical analysis (could be string or dict)
+        tech_analysis = report.get("technical_analysis", {})
+        if isinstance(tech_analysis, str):
+            # If it's a string, create minimal structure
+            essential_tech = {
+                "summary": tech_analysis[:200] if tech_analysis else "No technical analysis"
+            }
+        else:
+            # If it's a dict, extract key fields
+            essential_tech = {
+                "sentiment": tech_analysis.get("sentiment"),
+                "trend": tech_analysis.get("trend"),
+                "risk_level": tech_analysis.get("risk_level"),
+                "support_level": tech_analysis.get("support_level"),
+                "resistance_level": tech_analysis.get("resistance_level")
+            }
+        
+        # Handle news analysis (could be string or dict)
+        news_analysis = report.get("news_analysis", {})
+        if isinstance(news_analysis, str):
+            # If it's a string, create minimal structure
+            essential_news = {
+                "summary": news_analysis[:200] if news_analysis else "No news analysis"
+            }
+        else:
+            # If it's a dict, extract key fields
+            essential_news = {
+                "sentiment": news_analysis.get("sentiment"),
+                "key_events": news_analysis.get("key_events"),
+                "summary": news_analysis.get("summary")
+            }
+        
+        essential_reports[token] = {
+            "current_price": report.get("current_price"),
+            "price_change_24h": report.get("price_change_24h"),
+            "volume_24h": report.get("volume_24h"),
+            "market_cap": report.get("market_cap"),
+            "technical_analysis": essential_tech,
+            "news_analysis": essential_news
+        }
+
     prompt = get_final_report_prompt(
-        token_reports=valid_reports,
+        token_reports=essential_reports,
         allowed_tokens=allowed_tokens,
         target_token=target_token,
         reasoning=state.get("reasoning"),

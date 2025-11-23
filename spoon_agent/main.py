@@ -119,12 +119,27 @@ async def handle_analysis_request(payload: TradingLeadPayload) -> None:
             final_summary=final_summary
         )
 
+        # Prepare analysis result with all required fields
+        analysis_with_all_fields = analysis_result.copy()
+        
+        # Add extracted_coins if missing
+        if "extracted_coins" not in analysis_with_all_fields:
+            analysis_with_all_fields["extracted_coins"] = analysis_result.get("selected_tokens", [])
+        
+        # Add token_reports if missing
+        if "token_reports" not in analysis_with_all_fields:
+            analysis_with_all_fields["token_reports"] = analysis_result.get("token_reports", {})
+        
+        # Add final_summary if missing
+        if "final_summary" not in analysis_with_all_fields:
+            analysis_with_all_fields["final_summary"] = final_summary
+
         # Publish successful result
         await _publish_result(
             payload,
             status="analysis_ready",
             reply=reply_text,
-            analysis=analysis_result,
+            analysis=analysis_with_all_fields,
         )
 
         logger.info(f"Analysis completed successfully for sender {payload.sender_id}")

@@ -53,7 +53,7 @@ class TradingAnalysisState(TypedDict, total=False):
 class TradingAnalysisGraph:
     """Graph for analyzing trading leads with crypto market analysis."""
 
-    MAX_PARALLEL_TOKENS = 5  # Maximum tokens to analyze in parallel
+    MAX_PARALLEL_TOKENS = 2  # Maximum tokens to analyze in parallel (reduced for testing)
 
     def __init__(self, settings: Settings):
         """
