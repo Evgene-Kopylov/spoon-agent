@@ -17,13 +17,25 @@ dependencies = [
     "pydantic-settings>=2.12.0",
     "python-dotenv>=1.0.1",
     "rich>=14.2.0",
+    "nats-py>=2.12.0",
+    "faststream>=0.6.3",
 ]
 
 [dependency-groups]
 dev = [
     "pytest>=9.0.1",
     "pytest-asyncio>=1.3.0",
+    "nats-py>=2.6.0",
     "ruff>=0.14.5",
+]
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: Integration tests that hit real services",
+    "slow: Slow tests hitting external APIs",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning:websockets.legacy.*",
 ]
 
 [build-system]

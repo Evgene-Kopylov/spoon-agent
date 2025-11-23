@@ -105,16 +105,27 @@ spoon_agent/
 
 ### Running Tests
 
+The `tests/README.md` companion guide walks through the suite layout, live scenario expectations, and integration prerequisites.
+
 ```bash
-# Unit tests
-pytest tests/unit/
+# fast unit suite only (skips the live/integration marker)
+uv run pytest -q -m "not integration"
 
-# Integration tests
-pytest tests/integration/
-
-# E2E tests with API mocks
-pytest tests/e2e/
+# full run that reaches `tests/test_spoon_agent_live.py` (can take several minutes)
+uv run pytest -s -v
 ```
+
+Test coverage includes:
+
+- `tests/test_main_handler.py`: unit checks that `handle_analysis_request` emits success and error payloads.
+- `tests/test_trading_analysis_graph.py`: graph workflow with external calls stubbed.
+- `tests/test_spoon_agent_live.py`: real NATS roundtrip and result verification (marked `integration`/`slow`).
+
+Integration requirements (see `tests/README.md` for details):
+
+- `docker compose up spoon-agent nats` (or equivalent services already running).
+- `.env` populated with `OPENAI_API_KEY` (or Ollama-compatible key), `TAVILY_API_KEY` (if you need news), and other values from `spoon_agent/config.py`.
+- Internet access for Binance/Tavily/LLM providers.
 
 ### Local Development
 
