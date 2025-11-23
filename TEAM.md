@@ -11,7 +11,7 @@
 - **Role**: ML Engineer
 - **Telegram**: @bbliketerminal
 
-### Maxim Kardashin
+### Maxim Kirdashin
 - **Role**: ML Engineer
 - **Telegram**: @hchgssarwyh
 

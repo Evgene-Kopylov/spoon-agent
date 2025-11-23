@@ -192,7 +192,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **Ilya Goldobin** - ML Engineer
   - Telegram: @bbliketerminal
 
-- **Maxim Kardashin** - ML Engineer
+- **Maxim Kirdashin** - ML Engineer
   - Telegram: @hchgssarwyh
 
 ## Project Links
